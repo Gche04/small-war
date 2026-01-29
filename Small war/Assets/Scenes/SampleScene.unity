@@ -408,6 +408,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DragAndShoot
   power: 10
   maxDragDistance: 5
+  maxShootDistance: 5
   lookAt: {fileID: 1535210649}
 --- !u!212 &991863535
 SpriteRenderer:

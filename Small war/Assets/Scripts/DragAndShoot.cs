@@ -4,17 +4,18 @@ public class DragAndShoot : MonoBehaviour
 {
     [SerializeField] float power = 10f;
     [SerializeField] float maxDragDistance = 5f;
+    [SerializeField] float maxShootDistance = 5;
 
     [SerializeField] GameObject lookAt;
 
     LineRenderer lineRenderer;
     Rigidbody2D rb;
-    Camera mainCamera;
+    //Camera mainCamera;
 
-    Vector2 startPoint;
-    Vector2 endpoint;
-    Vector2 force;
-    Vector2 offset;
+    Vector2 startPos;
+    Vector2 endPos;
+    Vector2 forceDistance;
+    Vector2 offsetPos;
 
     bool isDragging = false;
 
@@ -23,7 +24,8 @@ public class DragAndShoot : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        mainCamera = Camera.main;
+        startPos = transform.position;
+        //mainCamera = Camera.main;
         lineRenderer.enabled = false;
     }
 
@@ -69,7 +71,8 @@ public class DragAndShoot : MonoBehaviour
     void OnMouseDown()
     {
         isDragging = true;
-        offset = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // Calculate the offset when the mouse button is pressed down
+        offsetPos = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //lineRenderer.enabled = true;
     }
 
@@ -78,14 +81,12 @@ public class DragAndShoot : MonoBehaviour
         if (isDragging)
         {
             // Convert mouse position to world coordinates
-            Vector2 newMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 currentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // Update the object's position based on the new mouse position and the calculated offset
-            transform.position = newMousePosition + offset;
+            transform.position = currentPos + offsetPos;
+            transform.position = Vector2.ClampMagnitude(transform.position, maxDragDistance);
 
-
-
-            //aimRotation.transform.LookAt(transform.position);
-            //StretchAndPoint();
+            //forceDistance = startPos - currentPos;
         }
     }
 
@@ -96,7 +97,12 @@ public class DragAndShoot : MonoBehaviour
         {
             isDragging = false;
             //lineRenderer.enabled = false;
-            rb.AddForce(transform.up * power, ForceMode2D.Impulse);
+            //force = Vector2.ClampMagnitude(transform.up, maxDragDistance);
+            //rb.AddForce(transform.up * power, ForceMode2D.Impulse);
+            rb.linearVelocity = transform.up * power;
+            //transform.Translate(transform.up * Time.de);
+            //transform.position = transform.up * power; //, ForceMode2D.Impulse);
+            //transform.position = Vector2.ClampMagnitude(transform.position, maxShootDistance);
         }
 
     }
