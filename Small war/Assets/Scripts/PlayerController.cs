@@ -1,22 +1,19 @@
 using UnityEngine;
 
-public class DragAndShoot : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    //[SerializeField] float power = 10f;
     float power = 10f;
     [SerializeField] float maxDragDistance = 5f;
     [SerializeField] float maxPower = 5.5f;
     [SerializeField] float minPower = 0;
 
     [SerializeField] GameObject lookAt;
+    [SerializeField] GameObject rotateBody;
 
     LineRenderer lineRenderer;
     Rigidbody2D rb;
 
-
     Vector2 startPos;
-    //Vector2 endPos;
-    //Vector2 forceDistance;
     Vector2 offsetPos;
 
     bool isDragging = false;
@@ -39,12 +36,11 @@ public class DragAndShoot : MonoBehaviour
     {
         if (isDragging)
         {
-            Vector3 targetPos = lookAt.transform.position - transform.position;
-            Quaternion targetRot = Quaternion.LookRotation(Vector3.forward, targetPos);
-
-            rb.MoveRotation(targetRot);
+            // make drag point at body 
+            rb.MoveRotation(RotateWithTarget(lookAt.transform, transform));
+            //make body rotate with drag
+            rotateBody.transform.rotation = RotateWithTarget(transform, rotateBody.transform);
         }
-
     }
 
     void OnMouseDown()
@@ -52,14 +48,12 @@ public class DragAndShoot : MonoBehaviour
         isDragging = true;
         // Calculate the offset when the mouse button is pressed down
         offsetPos = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
     }
 
     void OnMouseDrag()
     {
         if (isDragging)
         {
-            //lineRenderer.enabled = false;
             // Convert mouse position to world coordinates
             Vector2 currentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // Update the object's position based on the new mouse position and the calculated offset
@@ -70,8 +64,6 @@ public class DragAndShoot : MonoBehaviour
             float distance = Vector2.Distance(startPos, transform.position);
             //clamp power min max
             power = Mathf.Clamp(distance, minPower, maxPower);
-            
-
         }
     }
 
@@ -82,7 +74,7 @@ public class DragAndShoot : MonoBehaviour
         {
             lineRenderer.enabled = true;
             isDragging = false;
-            
+
             rb.transform.position = power * transform.up;
 
             Vector2 endPos = transform.position;
@@ -90,9 +82,13 @@ public class DragAndShoot : MonoBehaviour
             lineRenderer.SetPosition(1, endPos);
 
             rb.transform.position = startPos;
-            
         }
+    }
 
+    Quaternion RotateWithTarget(Transform target, Transform rotate) //make object rotation follow a target
+    {
+        Vector3 targetPos = target.position - rotate.position;
+        Quaternion targetRot = Quaternion.LookRotation(Vector3.forward, targetPos);
+        return targetRot;
     }
 }
-
