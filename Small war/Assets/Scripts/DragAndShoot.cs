@@ -15,8 +15,8 @@ public class DragAndShoot : MonoBehaviour
 
 
     Vector2 startPos;
-    Vector2 endPos;
-    Vector2 forceDistance;
+    //Vector2 endPos;
+    //Vector2 forceDistance;
     Vector2 offsetPos;
 
     bool isDragging = false;
@@ -26,6 +26,7 @@ public class DragAndShoot : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         rb = GetComponent<Rigidbody2D>();
         startPos = transform.position;
+        lineRenderer.positionCount = 2;
         lineRenderer.enabled = false;
     }
 
@@ -51,13 +52,14 @@ public class DragAndShoot : MonoBehaviour
         isDragging = true;
         // Calculate the offset when the mouse button is pressed down
         offsetPos = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //lineRenderer.enabled = true;
+        
     }
 
     void OnMouseDrag()
     {
         if (isDragging)
         {
+            //lineRenderer.enabled = false;
             // Convert mouse position to world coordinates
             Vector2 currentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // Update the object's position based on the new mouse position and the calculated offset
@@ -78,9 +80,16 @@ public class DragAndShoot : MonoBehaviour
         // Reset the dragging flag when the mouse button is released
         if (isDragging)
         {
+            lineRenderer.enabled = true;
             isDragging = false;
             
             rb.transform.position = power * transform.up;
+
+            Vector2 endPos = transform.position;
+            lineRenderer.SetPosition(0, startPos);
+            lineRenderer.SetPosition(1, endPos);
+
+            rb.transform.position = startPos;
             
         }
 
