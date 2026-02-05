@@ -369,8 +369,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 024ae592b57b73048b4178100ef5a650, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpawnManager
-  player1: {fileID: 6376907044640574277, guid: 1d417e2793627f344a9670172444f656, type: 3}
-  player2: {fileID: 6376907044640574277, guid: 476478220b908e6448f119667924fd8d, type: 3}
 --- !u!4 &1621210396
 Transform:
   m_ObjectHideFlags: 0

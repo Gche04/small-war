@@ -4,7 +4,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] int player;
 
-    [SerializeField] GameObject spawnManager;
+    SpawnManager spawnManager;
+
     [SerializeField] GameObject dragAndShoot;
     [SerializeField] GameObject lookAt;
     [SerializeField] GameObject rotateBody;
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        spawnManager = FindFirstObjectByType<SpawnManager>();
         lineRenderer = dragAndShoot.GetComponent<LineRenderer>();
         dragAndShootRb = dragAndShoot.GetComponent<Rigidbody2D>();
         startPos = dragAndShoot.transform.position;
@@ -41,7 +43,7 @@ public class PlayerController : MonoBehaviour
         if (isDragging)
         {
             // make drag point at body 
-            dragAndShootRb.MoveRotation(RotateWithTarget(lookAt, dragAndShoot));
+            dragAndShootRb.MoveRotation(RotateWithTarget(gameObject, dragAndShoot));
             //make body rotate with drag
             rotateBody.transform.rotation = RotateWithTarget(dragAndShoot, rotateBody);
         }
@@ -62,7 +64,7 @@ public class PlayerController : MonoBehaviour
             Vector2 currentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // Update the object's position based on the new mouse position and the calculated offset
             dragAndShoot.transform.position = currentPos + offsetPos;
-            dragAndShoot.transform.position = Vector2.ClampMagnitude(dragAndShoot.transform.position, maxDragDistance);
+            //dragAndShoot.transform.position = Vector2.ClampMagnitude(dragAndShoot.transform.position, maxDragDistance);
 
             //get distance between startpos and position
             float distance = Vector2.Distance(startPos, dragAndShoot.transform.position);
@@ -80,12 +82,21 @@ public class PlayerController : MonoBehaviour
             isDragging = false;
 
             dragAndShootRb.transform.position = power * dragAndShoot.transform.up;
+            Debug.Log(transform.up);
 
             Vector2 endPos = dragAndShoot.transform.position;
+
             lineRenderer.SetPosition(0, startPos);
             lineRenderer.SetPosition(1, endPos);
 
-            dragAndShootRb.transform.position = startPos;
+            dragAndShootRb.transform.position = transform.position;
+            //dragAndShoot.transform.rotation = Quaternion.identity;
+
+            spawnManager.SpawnAtPosition(gameObject, endPos);
+
+            
+
+            
         }
     }
 
