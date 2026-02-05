@@ -2,16 +2,20 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] int player;
+
+    [SerializeField] GameObject spawnManager;
+    [SerializeField] GameObject dragAndShoot;
+    [SerializeField] GameObject lookAt;
+    [SerializeField] GameObject rotateBody;
+
     float power = 10f;
     [SerializeField] float maxDragDistance = 5f;
     [SerializeField] float maxPower = 5.5f;
     [SerializeField] float minPower = 0;
 
-    [SerializeField] GameObject lookAt;
-    [SerializeField] GameObject rotateBody;
-
     LineRenderer lineRenderer;
-    Rigidbody2D rb;
+    Rigidbody2D dragAndShootRb;
 
     Vector2 startPos;
     Vector2 offsetPos;
@@ -20,9 +24,9 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        rb = GetComponent<Rigidbody2D>();
-        startPos = transform.position;
+        lineRenderer = dragAndShoot.GetComponent<LineRenderer>();
+        dragAndShootRb = dragAndShoot.GetComponent<Rigidbody2D>();
+        startPos = dragAndShoot.transform.position;
         lineRenderer.positionCount = 2;
         lineRenderer.enabled = false;
     }
@@ -37,9 +41,9 @@ public class PlayerController : MonoBehaviour
         if (isDragging)
         {
             // make drag point at body 
-            rb.MoveRotation(RotateWithTarget(lookAt.transform, transform));
+            dragAndShootRb.MoveRotation(RotateWithTarget(lookAt, dragAndShoot));
             //make body rotate with drag
-            rotateBody.transform.rotation = RotateWithTarget(transform, rotateBody.transform);
+            rotateBody.transform.rotation = RotateWithTarget(dragAndShoot, rotateBody);
         }
     }
 
@@ -47,7 +51,7 @@ public class PlayerController : MonoBehaviour
     {
         isDragging = true;
         // Calculate the offset when the mouse button is pressed down
-        offsetPos = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        offsetPos = dragAndShoot.transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     void OnMouseDrag()
@@ -57,11 +61,11 @@ public class PlayerController : MonoBehaviour
             // Convert mouse position to world coordinates
             Vector2 currentPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // Update the object's position based on the new mouse position and the calculated offset
-            transform.position = currentPos + offsetPos;
-            transform.position = Vector2.ClampMagnitude(transform.position, maxDragDistance);
+            dragAndShoot.transform.position = currentPos + offsetPos;
+            dragAndShoot.transform.position = Vector2.ClampMagnitude(dragAndShoot.transform.position, maxDragDistance);
 
             //get distance between startpos and position
-            float distance = Vector2.Distance(startPos, transform.position);
+            float distance = Vector2.Distance(startPos, dragAndShoot.transform.position);
             //clamp power min max
             power = Mathf.Clamp(distance, minPower, maxPower);
         }
@@ -75,19 +79,19 @@ public class PlayerController : MonoBehaviour
             lineRenderer.enabled = true;
             isDragging = false;
 
-            rb.transform.position = power * transform.up;
+            dragAndShootRb.transform.position = power * dragAndShoot.transform.up;
 
-            Vector2 endPos = transform.position;
+            Vector2 endPos = dragAndShoot.transform.position;
             lineRenderer.SetPosition(0, startPos);
             lineRenderer.SetPosition(1, endPos);
 
-            rb.transform.position = startPos;
+            dragAndShootRb.transform.position = startPos;
         }
     }
 
-    Quaternion RotateWithTarget(Transform target, Transform rotate) //make object rotation follow a target
+    Quaternion RotateWithTarget(GameObject target, GameObject rotate) //make object rotation follow a target
     {
-        Vector3 targetPos = target.position - rotate.position;
+        Vector3 targetPos = target.transform.position - rotate.transform.position;
         Quaternion targetRot = Quaternion.LookRotation(Vector3.forward, targetPos);
         return targetRot;
     }
