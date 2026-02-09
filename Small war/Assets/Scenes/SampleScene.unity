@@ -149,6 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f75baaac8d51764ab85e72a4519fe75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LineRender
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!120 &240045956
 LineRenderer:
   serializedVersion: 3
@@ -687,48 +690,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1836600630813923386, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
-      propertyPath: m_SortingOrder
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1838933509026313711, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
-      propertyPath: m_SortingOrder
-      value: -4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2292802517680020002, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
-      propertyPath: m_SortingOrder
-      value: -5
+    - target: {fileID: 707363600489992827, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3093913793034674130, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5031430963462322946, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
-      propertyPath: m_SortingOrder
-      value: -1
+    - target: {fileID: 3093913793034674130, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 5038625051499206473, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
-      propertyPath: boundary
-      value: 5
+    - target: {fileID: 3405723493604364314, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 5038625051499206473, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
-      propertyPath: spawnManager
-      value: 
-      objectReference: {fileID: 1621210394}
-    - target: {fileID: 6285638770307088627, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
-      propertyPath: m_SortingOrder
-      value: -1
+    - target: {fileID: 5900166201984933493, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 7388367669057739522, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
-      propertyPath: m_Enabled
-      value: 0
+    - target: {fileID: 8896177640149231978, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 7388367669057739522, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
+    - target: {fileID: 9185586749622639949, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 253084296808864366, guid: f577424d8a2b51f40b6089bfeae589a1, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

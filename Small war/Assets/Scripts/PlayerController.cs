@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -47,9 +48,13 @@ public class PlayerController : MonoBehaviour
 
     void OnMouseDown()
     {
-        isDragging = true;
-        // Calculate the offset when the mouse button is pressed down
-        offsetPos = dragAndShoot.transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (gameObject != null)
+        {
+            isDragging = true;
+            // Calculate the offset when the mouse button is pressed down
+            offsetPos = dragAndShoot.transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
+
     }
 
     void OnMouseDrag()
@@ -105,14 +110,16 @@ public class PlayerController : MonoBehaviour
 
             Vector2 endPos = dragAndShoot.transform.position;
             lineRender.CreateLine(startPos, endPos);
+            lineRender.CheckForHit(startPos, endPos, gameObject);
 
             dragAndShoot.transform.position = transform.position;
 
             spawnManager.SpawnAtPosition(gameObject, endPos);
 
         }
-        
+
     }
+
 
     Quaternion RotateWithTarget(GameObject target, GameObject rotate) //make object rotation follow a target
     {
