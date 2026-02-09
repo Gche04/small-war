@@ -16,9 +16,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float maxPower = 5.5f;
     [SerializeField] float minPower = 0;
     [SerializeField] float boundary = 10f;
+    readonly float cancelShootThreshold = 0.2f;
 
-    Vector2 startPos;
+    Vector3 startPos;
     Vector2 offsetPos;
+    Vector3 defaultScale;
+    Vector3 upScale;
 
     bool isDragging = false;
 
@@ -27,6 +30,8 @@ public class PlayerController : MonoBehaviour
         spawnManager = FindFirstObjectByType<SpawnManager>();
         lineRender = FindFirstObjectByType<LineRender>();
         startPos = dragAndShoot.transform.position;
+        defaultScale = dragAndShoot.transform.localScale;
+        upScale = dragAndShoot.transform.localScale * 2;
     }
 
     void Update()
@@ -38,11 +43,6 @@ public class PlayerController : MonoBehaviour
             //make body rotate with drag
             rotateBody.transform.rotation = RotateWithTarget(dragAndShoot, rotateBody);
         }
-    }
-
-    void FixedUpdate()
-    {
-        
     }
 
     void OnMouseDown()
@@ -65,6 +65,15 @@ public class PlayerController : MonoBehaviour
             //get distance between startpos and position
             float distance = Vector2.Distance(startPos, dragAndShoot.transform.position);
 
+            if (distance <= cancelShootThreshold)
+            {
+                dragAndShoot.transform.localScale = upScale;
+            }
+            else
+            {
+                dragAndShoot.transform.localScale = defaultScale;
+            }
+
             //clamp power min max
             power = Mathf.Clamp(distance, minPower, maxPower);
         }
@@ -72,8 +81,16 @@ public class PlayerController : MonoBehaviour
 
     void OnMouseUp()
     {
+
+        if (dragAndShoot.transform.localScale != defaultScale)
+        {
+            isDragging = false;
+            dragAndShoot.transform.position = transform.position;
+            dragAndShoot.transform.localScale = defaultScale;
+        }
+
         // Reset the dragging flag when the mouse button is released
-        if (isDragging)
+        else if (isDragging)
         {
             isDragging = false;
 
@@ -92,8 +109,9 @@ public class PlayerController : MonoBehaviour
             dragAndShoot.transform.position = transform.position;
 
             spawnManager.SpawnAtPosition(gameObject, endPos);
-            
+
         }
+        
     }
 
     Quaternion RotateWithTarget(GameObject target, GameObject rotate) //make object rotation follow a target
