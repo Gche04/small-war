@@ -1,35 +1,36 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Controller
 {
-    [SerializeField] int player;
+    //[SerializeField] int player;
 
-    SpawnManager spawnManager;
-    LineRender lineRender;
+    //SpawnManager spawnManager;
+    //LineRender lineRender;
 
-    [SerializeField] GameObject dragAndShoot;
-    [SerializeField] GameObject lookAt;
-    [SerializeField] GameObject rotateBody;
+    //[SerializeField] GameObject dragAndShoot;
+    //[SerializeField] GameObject lookAt;
+    //[SerializeField] GameObject rotateBody;
 
-    float power = 10f;
-    [SerializeField] float maxDragDistance = 5f;
-    [SerializeField] float maxPower = 5.5f;
-    [SerializeField] float minPower = 0;
-    [SerializeField] float boundary = 10f;
+    //float power = 10f;
+    //[SerializeField] float maxDragDistance = 5f;
+    //[SerializeField] float maxPower = 5.5f;
+    //[SerializeField] float minPower = 0;
+    //[SerializeField] float boundary = 5f;
     readonly float cancelShootThreshold = 0.2f;
 
-    Vector3 startPos;
+    //Vector3 startPos;
     Vector2 offsetPos;
     Vector3 defaultScale;
     Vector3 upScale;
 
-    bool isDragging = false;
+    //bool isDragging = false;
 
     void Start()
     {
         spawnManager = FindFirstObjectByType<SpawnManager>();
         lineRender = FindFirstObjectByType<LineRender>();
+        isDragging = false;
         startPos = dragAndShoot.transform.position;
         defaultScale = dragAndShoot.transform.localScale;
         upScale = dragAndShoot.transform.localScale * 2;
@@ -121,10 +122,10 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    Quaternion RotateWithTarget(GameObject target, GameObject rotate) //make object rotation follow a target
+    /*Quaternion RotateWithTarget(GameObject target, GameObject rotate) //make object rotation follow a target
     {
         Vector3 targetPos = target.transform.position - rotate.transform.position;
         Quaternion targetRot = Quaternion.LookRotation(Vector3.forward, targetPos);
         return targetRot;
-    }
+    }*/
 }
