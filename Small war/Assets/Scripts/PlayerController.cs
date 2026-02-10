@@ -1,30 +1,12 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : Controller
 {
-    //[SerializeField] int player;
-
-    //SpawnManager spawnManager;
-    //LineRender lineRender;
-
-    //[SerializeField] GameObject dragAndShoot;
-    //[SerializeField] GameObject lookAt;
-    //[SerializeField] GameObject rotateBody;
-
-    //float power = 10f;
-    //[SerializeField] float maxDragDistance = 5f;
-    //[SerializeField] float maxPower = 5.5f;
-    //[SerializeField] float minPower = 0;
-    //[SerializeField] float boundary = 5f;
     readonly float cancelShootThreshold = 0.2f;
 
-    //Vector3 startPos;
     Vector2 offsetPos;
     Vector3 defaultScale;
     Vector3 upScale;
-
-    //bool isDragging = false;
 
     void Start()
     {
@@ -98,34 +80,8 @@ public class PlayerController : Controller
         // Reset the dragging flag when the mouse button is released
         else if (isDragging)
         {
-            isDragging = false;
-
-            dragAndShoot.transform.position = transform.position + dragAndShoot.transform.up * power;
-
-            //reset position into boundary
-            Vector2 pos = dragAndShoot.transform.position;
-            pos.x = Mathf.Clamp(pos.x, -boundary, boundary);
-            pos.y = Mathf.Clamp(pos.y, -boundary, boundary);
-
-            dragAndShoot.transform.position = pos;
-
-            Vector2 endPos = dragAndShoot.transform.position;
-            lineRender.CreateLine(startPos, endPos);
-            lineRender.CheckForHit(startPos, endPos, gameObject);
-
-            dragAndShoot.transform.position = transform.position;
-
-            spawnManager.SpawnAtPosition(gameObject, endPos);
-
+            Shoot();
         }
 
     }
-
-
-    /*Quaternion RotateWithTarget(GameObject target, GameObject rotate) //make object rotation follow a target
-    {
-        Vector3 targetPos = target.transform.position - rotate.transform.position;
-        Quaternion targetRot = Quaternion.LookRotation(Vector3.forward, targetPos);
-        return targetRot;
-    }*/
 }
