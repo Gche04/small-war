@@ -44,18 +44,32 @@ public class Controller : MonoBehaviour
         dragAndShoot.transform.position = transform.position + dragAndShoot.transform.up * power;
 
         //reset position into boundary
-        Vector2 pos = dragAndShoot.transform.position;
-        pos.x = Mathf.Clamp(pos.x, -boundary, boundary);
-        pos.y = Mathf.Clamp(pos.y, -boundary, boundary);
-
-        dragAndShoot.transform.position = pos;
+        //Vector2 pos = dragAndShoot.transform.position;
+        //pos.x = Mathf.Clamp(pos.x, -boundary, boundary);
+        //pos.y = Mathf.Clamp(pos.y, -boundary, boundary);
+        dragAndShoot.transform.position = ResetPosIntoBoundary(dragAndShoot.transform.position);
 
         endPos = dragAndShoot.transform.position;
-        lineRender.CreateLine(startPos, endPos);
-        lineRender.CheckForHit(startPos, endPos, gameObject);
 
-        dragAndShoot.transform.position = transform.position;
+        dragAndShoot.transform.position = startPos;
 
-        spawnManager.SpawnAtPosition(gameObject, endPos);
+        LineHitSpawn(endPos);
+        //lineRender.CreateLine(startPos, endPos);
+        //lineRender.CheckForHit(startPos, endPos, gameObject);
+        //spawnManager.SpawnAtPosition(gameObject, endPos);
+    }
+
+    protected void LineHitSpawn(Vector3 endPosition)
+    {
+        lineRender.CreateLine(startPos, endPosition);
+        lineRender.CheckForHit(startPos, endPosition, gameObject);
+        spawnManager.SpawnAtPosition(gameObject, endPosition);
+    }
+
+    protected Vector3 ResetPosIntoBoundary(Vector3 pos)
+    {
+        pos.x = Mathf.Clamp(pos.x, -boundary, boundary);
+        pos.y = Mathf.Clamp(pos.y, -boundary, boundary);
+        return pos;
     }
 }
