@@ -51,14 +51,14 @@ public class Controller : MonoBehaviour
 
         dragAndShoot.transform.position = startPos;
 
-        return CreateLineCheckForHitSpawn(endPos);
+        return CreateLineCheckForHitNdClone(endPos);
     }
 
-    protected GameObject CreateLineCheckForHitSpawn(Vector3 endPosition)
+    protected GameObject CreateLineCheckForHitNdClone(Vector3 endPosition)
     {
         lineRender.CreateLine(startPos, endPosition);
         lineRender.CheckForHitAndDestroy(startPos, endPosition);
-        return spawnManager.SpawnAtPosition(gameObject, endPosition);
+        return spawnManager.CloneAtPosition(gameObject, endPosition);
     }
 
     protected Vector3 ResetPosIntoBoundary(Vector3 pos)

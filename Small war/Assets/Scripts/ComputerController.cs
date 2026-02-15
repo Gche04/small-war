@@ -18,10 +18,20 @@ public class ComputerController : Controller
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Vector3 pos = new(-3f, -1);  // pos not more than 6
+            GameObject attack = storeManager.GetAttackPosition();
+            Vector3 pos;
+
+            if (attack != null)
+            {
+                pos = attack.transform.position;
+            }else
+            {
+                pos = new(-1f, 3);
+            }
+            //new(-1f, 3);  // pos not more than 6
             pos = ResetPosIntoBoundary(pos);
 
-            GameObject gameObjectClone = CreateLineCheckForHitSpawn(pos);
+            GameObject gameObjectClone = CreateLineCheckForHitNdClone(pos);
             
             storeManager.AddToList(gameObjectClone, instantiatedObjectsListTwo);
 
