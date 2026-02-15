@@ -80,7 +80,7 @@ public class PlayerController : Controller
         // Reset the dragging flag when the mouse button is released
         else if (isDragging)
         {
-            Shoot();
+            GameObject gameObjectClone = Shoot();
         }
 
     }

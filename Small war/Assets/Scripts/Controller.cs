@@ -37,33 +37,26 @@ public class Controller : MonoBehaviour
         return targetRot;
     }
 
-    protected void Shoot()
+    protected GameObject Shoot()
     {
         isDragging = false;
 
         dragAndShoot.transform.position = transform.position + dragAndShoot.transform.up * power;
 
-        //reset position into boundary
-        //Vector2 pos = dragAndShoot.transform.position;
-        //pos.x = Mathf.Clamp(pos.x, -boundary, boundary);
-        //pos.y = Mathf.Clamp(pos.y, -boundary, boundary);
         dragAndShoot.transform.position = ResetPosIntoBoundary(dragAndShoot.transform.position);
 
         endPos = dragAndShoot.transform.position;
 
         dragAndShoot.transform.position = startPos;
 
-        LineHitSpawn(endPos);
-        //lineRender.CreateLine(startPos, endPos);
-        //lineRender.CheckForHit(startPos, endPos, gameObject);
-        //spawnManager.SpawnAtPosition(gameObject, endPos);
+        return CreateLineCheckForHitSpawn(endPos);
     }
 
-    protected void LineHitSpawn(Vector3 endPosition)
+    protected GameObject CreateLineCheckForHitSpawn(Vector3 endPosition)
     {
         lineRender.CreateLine(startPos, endPosition);
-        lineRender.CheckForHit(startPos, endPosition, gameObject);
-        spawnManager.SpawnAtPosition(gameObject, endPosition);
+        lineRender.CheckForHit(startPos, endPosition);
+        return spawnManager.SpawnAtPosition(gameObject, endPosition);
     }
 
     protected Vector3 ResetPosIntoBoundary(Vector3 pos)
