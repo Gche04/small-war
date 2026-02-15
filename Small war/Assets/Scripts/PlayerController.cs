@@ -1,8 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : Controller
 {
     readonly float cancelShootThreshold = 0.2f;
+
+    int instantiatedObjectsListOne = 1;
 
     Vector2 offsetPos;
     Vector3 defaultScale;
@@ -12,6 +15,8 @@ public class PlayerController : Controller
     {
         spawnManager = FindFirstObjectByType<SpawnManager>();
         lineRender = FindFirstObjectByType<LineRender>();
+        storeManager =  FindFirstObjectByType<StoreManager>();
+        storeManager.AddToList(gameObject, instantiatedObjectsListOne);
         isDragging = false;
         startPos = dragAndShoot.transform.position;
         defaultScale = dragAndShoot.transform.localScale;
@@ -81,6 +86,8 @@ public class PlayerController : Controller
         else if (isDragging)
         {
             GameObject gameObjectClone = Shoot();
+
+            storeManager.AddToList(gameObjectClone, instantiatedObjectsListOne);
         }
 
     }

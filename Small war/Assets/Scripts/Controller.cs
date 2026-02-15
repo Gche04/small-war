@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Controller : MonoBehaviour
@@ -8,6 +9,7 @@ public class Controller : MonoBehaviour
 
     protected SpawnManager spawnManager;
     protected LineRender lineRender;
+    protected StoreManager storeManager;
 
     protected float power = 10f;
     protected float maxPower = 5.5f;
@@ -55,7 +57,7 @@ public class Controller : MonoBehaviour
     protected GameObject CreateLineCheckForHitSpawn(Vector3 endPosition)
     {
         lineRender.CreateLine(startPos, endPosition);
-        lineRender.CheckForHit(startPos, endPosition);
+        lineRender.CheckForHitAndDestroy(startPos, endPosition);
         return spawnManager.SpawnAtPosition(gameObject, endPosition);
     }
 

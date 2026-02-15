@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ public class LineRender : MonoBehaviour
         lineRenderer.SetPosition(1, endPos);
     }
 
-    public void CheckForHit(Vector2 startPos, Vector2 endPos)
+    public void CheckForHitAndDestroy(Vector2 startPos, Vector2 endPos)
     {
         RaycastHit2D[] hits = Physics2D.LinecastAll(startPos, endPos, collisionLayer);
         // Create a new array, skipping the first element
