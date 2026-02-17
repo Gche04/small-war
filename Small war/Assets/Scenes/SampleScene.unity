@@ -755,10 +755,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1051283973605141686, guid: 00ac01e60b851d74db4a1ab5229d4611, type: 3}
-      propertyPath: objectPrefab
-      value: 
-      objectReference: {fileID: 5666297253653042663, guid: 00ac01e60b851d74db4a1ab5229d4611, type: 3}
     - target: {fileID: 5666297253653042663, guid: 00ac01e60b851d74db4a1ab5229d4611, type: 3}
       propertyPath: m_Name
       value: Comp

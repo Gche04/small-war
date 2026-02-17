@@ -41,7 +41,7 @@ public class StoreManager : MonoBehaviour
         instantiatedObjectsListTwo.RemoveAll(item => item == null);
     }
 
-    public GameObject GetAttackPosition()
+    public List<GameObject> GetAttackPosition()
     {
         RemoveDestroyed();
         foreach (GameObject compObject in instantiatedObjectsListTwo)
@@ -51,7 +51,13 @@ public class StoreManager : MonoBehaviour
                 float distance = Vector2.Distance(compObject.transform.position, playerObject.transform.position);
                 if (distance <= 6f)
                 {
-                    return playerObject;
+                    List<GameObject> attackerAndPositionToAttack = new()
+                    {
+                        compObject,
+                        playerObject
+                    };
+
+                    return attackerAndPositionToAttack;
                 }
             }
         }

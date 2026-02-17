@@ -18,18 +18,25 @@ public class ComputerController : Controller
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameObject attack = storeManager.GetAttackPosition();
+            List<GameObject> attackMove = storeManager.GetAttackPosition();
+
             Vector3 pos;
 
-            if (attack != null)
+            if (attackMove != null)
             {
-                pos = attack.transform.position;
+                GameObject compGameObject = attackMove[0];
+                GameObject playerGameObject = attackMove[1];
+
+                startPos = compGameObject.transform.position;
+
+                compGameObject.transform.rotation = RotateWithTarget(playerGameObject, compGameObject);
+                pos = playerGameObject.transform.position + compGameObject.transform.up * 2;
             }else
             {
                 pos = new(-1f, 3);
             }
-            //new(-1f, 3);  // pos not more than 6
-            pos = ResetPosIntoBoundary(pos);
+            
+            //pos = ResetPosIntoBoundary(pos);
 
             GameObject gameObjectClone = CreateLineCheckForHitNdClone(pos);
             

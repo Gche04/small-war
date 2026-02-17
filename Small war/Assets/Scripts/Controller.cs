@@ -11,7 +11,7 @@ public class Controller : MonoBehaviour
     protected LineRender lineRender;
     protected StoreManager storeManager;
 
-    protected float power = 10f;
+    protected float power = 6f;
     protected float maxPower = 5.5f;
     protected float minPower = 0;
     protected float boundary = 5f;
@@ -45,7 +45,7 @@ public class Controller : MonoBehaviour
 
         dragAndShoot.transform.position = transform.position + dragAndShoot.transform.up * power;
 
-        dragAndShoot.transform.position = ResetPosIntoBoundary(dragAndShoot.transform.position);
+        //dragAndShoot.transform.position = ResetPosIntoBoundary(dragAndShoot.transform.position);
 
         endPos = dragAndShoot.transform.position;
 
@@ -56,9 +56,10 @@ public class Controller : MonoBehaviour
 
     protected GameObject CreateLineCheckForHitNdClone(Vector3 endPosition)
     {
-        lineRender.CreateLine(startPos, endPosition);
-        lineRender.CheckForHitAndDestroy(startPos, endPosition);
-        return spawnManager.CloneAtPosition(gameObject, endPosition);
+        Vector3 endPosReset = ResetPosIntoBoundary(endPosition);
+        lineRender.CreateLine(startPos, endPosReset);
+        lineRender.CheckForHitAndDestroy(startPos, endPosReset);
+        return spawnManager.CloneAtPosition(gameObject, endPosReset);
     }
 
     protected Vector3 ResetPosIntoBoundary(Vector3 pos)
